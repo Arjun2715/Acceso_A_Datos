@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RanReg {
 
@@ -23,7 +24,8 @@ public class RanReg {
             List<String[]> data = new ArrayList<>();
             data.add(new String[]{"Fecha","Random Int","Boolean"});
             for (int j = 1; j < 10001; j++) {
-                data.add(new String[]{date(),(String.valueOf(random())),bool()});
+                //data.add(new String[]{date(),(String.valueOf(random())),bool()}); //for today's date only
+                data.add(new String[]{String.valueOf(createRandomDate(1900,2022)),(String.valueOf(random())),bool()});//for a randum date
             }
             csvfile.writeAll(data);
             csvfile.close();
@@ -36,11 +38,21 @@ public class RanReg {
         int r = (int) (Math.random() * 10000);
         return r;
     }
-//date value---------------------------------------------------------------------------------------
+//date value(today's date)---------------------------------------------------------------------------------------
     public static String date(){
         DateTimeFormatter d = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate now  = LocalDate.now();
     return d.format(now);
+    }
+    //random date
+    public static int createRandomIntBetween(int start, int end) {
+        return start + (int) Math.round(Math.random() * (end - start));
+    }
+    public static LocalDate createRandomDate(int startYear, int endYear) {
+        int day = createRandomIntBetween(1, 28);
+        int month = createRandomIntBetween(1, 12);
+        int year = createRandomIntBetween(startYear, endYear);
+        return LocalDate.of(year, month, day);
     }
 //boolean value ------------------------------------------------------------------------------------
     public static String bool(){
